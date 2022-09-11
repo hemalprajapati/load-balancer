@@ -1,8 +1,10 @@
 package com.example.loadbalancer;
 
+import java.util.Map;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -20,29 +22,24 @@ import org.springframework.web.bind.annotation.RestController;
 //Rest Controller which handles request
 
 @RestController
-@RequestMapping("/api")	
-public class APIController { 
+@RequestMapping("/api")
+public class APIController {
+
+	@Value("${server.port}")
+	private String port;
 
 	@PostMapping("/post-data")
-	@ResponseBody
-	public ResponseEntity<Object> postData(@RequestBody String payload) {
-		
-		try {
-	        new JSONObject(payload);
-	    } catch (JSONException e) {
-	    	return new ResponseEntity<>("Invalid JSON", HttpStatus.BAD_REQUEST);
-	    }
-		
-		
-		return new ResponseEntity<>(payload, HttpStatus.OK);
+	public Map<String, Object> postData(@RequestBody Map<String, Object> payload) {
+		payload.put("Port", port);
+		return payload;
+
+
 	}
-	
-	
+
 	@GetMapping("/get-data")
 	@ResponseBody
 	public ResponseEntity<Object> postData() {
-		
-		
-		return new ResponseEntity<>("get data from 9000", HttpStatus.OK);
+
+		return new ResponseEntity<>("get data from : " + port, HttpStatus.OK);
 	}
 }
