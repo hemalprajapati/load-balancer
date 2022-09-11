@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+//Rest Controller which handles request
+
 @RestController
 @RequestMapping("/api")	
-public class APIController {
+public class APIController { 
 
 	@PostMapping("/post-data")
 	@ResponseBody
